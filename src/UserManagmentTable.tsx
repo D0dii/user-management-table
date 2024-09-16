@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useAppDispatch, useAppSelector } from "./hooks";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
   fetchUsers,
   selectFilteredUsers,
@@ -7,7 +7,18 @@ import {
   setUsernameFilter,
   setEmailFilter,
   setPhoneFilter,
-} from "src/userSlice";
+} from "@/features/user/userSlice";
+import { Input } from "@/components/ui/input";
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 function UserManagmentTable() {
   const dispatch = useAppDispatch();
@@ -47,65 +58,61 @@ function UserManagmentTable() {
   }
 
   return (
-    <div>
-      <h1>Users:</h1>
-      <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
-        <input
-          type="text"
-          value={filters.name}
-          onChange={handleNameFilterChange}
-          placeholder="Filter by Name"
-          style={{ padding: "10px", flex: 1 }}
-        />
-        <input
-          type="text"
-          value={filters.username}
-          onChange={handleUsernameFilterChange}
-          placeholder="Filter by Username"
-          style={{ padding: "10px", flex: 1 }}
-        />
-        <input
-          type="text"
-          value={filters.email}
-          onChange={handleEmailFilterChange}
-          placeholder="Filter by Email"
-          style={{ padding: "10px", flex: 1 }}
-        />
-        <input
-          type="text"
-          value={filters.phone}
-          onChange={handlePhoneFilterChange}
-          placeholder="Filter by Phone"
-          style={{ padding: "10px", flex: 1 }}
-        />
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Phone</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers.length > 0 ? (
-            filteredUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.name}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={4}>No users found</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+    <Table>
+      <TableCaption>A list of users</TableCaption>
+      <TableHeader>
+        <TableRow className="hover:bg-black">
+          <TableHead className="w-[100px]">Name</TableHead>
+          <TableHead>Username</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead className="text-right">Phone</TableHead>
+        </TableRow>
+        <TableRow>
+          <TableCell>
+            <Input
+              type="text"
+              value={filters.name}
+              onChange={handleNameFilterChange}
+              placeholder="Filter by Name"
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              type="text"
+              value={filters.username}
+              onChange={handleUsernameFilterChange}
+              placeholder="Filter by Username"
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              type="text"
+              value={filters.email}
+              onChange={handleEmailFilterChange}
+              placeholder="Filter by Email"
+            />
+          </TableCell>
+          <TableCell className="flex justify-end">
+            <Input
+              type="text"
+              value={filters.phone}
+              onChange={handlePhoneFilterChange}
+              placeholder="Filter by Phone"
+            />
+          </TableCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {filteredUsers.map((user) => (
+          <TableRow key={user.id}>
+            <TableCell className="font-medium">{user.name}</TableCell>
+            <TableCell>{user.username}</TableCell>
+            <TableCell>{user.email}</TableCell>
+            <TableCell className="text-right">{user.phone}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
   );
 }
 
