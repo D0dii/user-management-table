@@ -1,5 +1,11 @@
+import { UserManagmentTable } from "src/UserManagmentTable";
+
 function App() {
-  return <div className="text-3xl font-bold underline"> aaaIt's working!</div>;
+  return (
+    <div>
+      <UserManagmentTable />
+    </div>
+  );
 }
 
 export default App;
