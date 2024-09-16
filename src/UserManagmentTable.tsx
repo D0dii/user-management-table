@@ -9,7 +9,7 @@ import {
   setPhoneFilter,
 } from "@/features/user/userSlice";
 import { Input } from "@/components/ui/input";
-
+import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import {
   Table,
   TableBody,
@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Error } from "@/components/Error";
 
 function UserManagmentTable() {
   const dispatch = useAppDispatch();
@@ -50,11 +51,11 @@ function UserManagmentTable() {
   };
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <LoadingSkeleton />;
   }
 
   if (status === "failed") {
-    return <div>Error: {error}</div>;
+    return <Error message={error} />;
   }
 
   return (
